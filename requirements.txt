@@ -3,3 +3,6 @@ asyncprawcore==2.4.0
 python-telegram-bot==21.6
 aiohttp==3.8.4
 environs==11.0.0
+SQLAlchemy==2.0.10
+Flask==2.2.3
+Flask-SQLAlchemy==3.0.3
