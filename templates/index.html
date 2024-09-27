@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reddit Image Viewer</title>
+    <style>
+        #loading {
+            display: none; /* 初始隐藏 */
+            font-size: 20px;
+            color: blue;
+        }
+    </style>
+</head>
+<body>
+    <h1>Reddit Images</h1>
+    <button id="fetch-button">Fetch New Posts</button>
+    <div id="loading">Loading...</div> <!-- 加载指示器 -->
+    <div id="image-gallery">
+        {% for image in images %}
+            <img src="{{ image }}" alt="Reddit Image" style="max-width: 300px; margin: 10px;">
+        {% endfor %}
+    </div>
+    
+   
+
+    <script>
+        document.getElementById('fetch-button').addEventListener('click', async () => {
+            const loadingIndicator = document.getElementById('loading');
+            loadingIndicator.style.display = 'block'; // 显示加载指示器
+
+            const response = await fetch('/fetch-posts');
+            const newImages = await response.json();
+            const gallery = document.getElementById('image-gallery');
+
+            // 在顶部插入新图片
+            newImages.forEach(image => {
+                const imgElement = document.createElement('img');
+                imgElement.src = image;
+                imgElement.alt = 'Reddit Image';
+                imgElement.style.maxWidth = '300px';
+                imgElement.style.margin = '10px';
+                gallery.insertBefore(imgElement, gallery.firstChild); // 插入到顶部
+            });
+
+            loadingIndicator.style.display = 'none'; // 隐藏加载指示器
+        });
+    </script>
+</body>
+</html>
